@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<head>
+   <meta charset="UTF-8">
+   <title>矩阵相乘</title>
+   <style>
+       form{float: left;}
+       .box0{width: 50px;height: 350px;border: 0px solid rgb(212, 206, 206);float: left;padding: 0px;margin: 10px;text-align: center;line-height: 350px;font-size: 60px;margin-right: 50px;}
+       .box1{width: 350px;height: 350px;border: 1px solid black;border-radius: 4px;padding: 0px;margin: 10px;background-color: rgb(255, 255, 255);float: left;}
+       .box2{width: 29px;height: 29px;border: 1px solid black;padding: 0px;margin: 2px;float: left;;border-radius: 4px;font-size: 15px;text-align: center;}
+        .bu{
+            margin-top: 10px;
+        }
+        p{
+            font-size: 20px;
+        }
+   </style>
+   <script>
+       window.onload = function(){
+           var x=document.getElementsByClassName("box2");
+           for(var i=0;i<x.length;i++){
+               if(x[i].value!=""){
+               x[i].style.backgroundColor="grey";
+               }
+           }
+       }
+    //    获取矩阵列数
+       function getX(str){
+            var x=0;
+            for(var i=0;i<10;i++){
+                if(document.getElementById(str+'0'+i).value!="")
+                {
+                    x++;
+                }
+            }
+            return x;
+       }
+
+    //    获取矩阵行数
+       function getY(str){
+            var y=0;
+            for(var i=0;i<10;i++){
+                if(document.getElementById(str+i+'0').value!="")
+                {
+                    y++;
+                }
+            }
+            return y;
+       }
+
+    //    获取矩阵数据
+       function getnumber(str){
+           var x=getX(str);
+           var y=getY(str);
+           var A=new Array();
+           for(var i=0;i<y;i++){
+               A[i]=new Array();
+               for(var j=0;j<x;j++){
+                   A[i][j]=document.getElementById(str+i+j).value;
+               }
+           }
+           return A;
+       }
+
+    //    判断是否输入
+    function isBlank(str){
+        var n=0;
+        for(var i=0;i<10;i++){
+            for(var j=0;j<10;j++){
+               if(document.getElementById(str+i+j).value!=""){
+                   n++;
+               }
+            }
+        }
+        if(n==0){
+            alert("未输入数据！");
+            return false;
+        }else{
+            return true;
+        }
+    }
+      
+    
+
+    // 判断是否从左上第一格输入
+    function isFFinput(str){
+        if(document.getElementById(str+"00").value==""){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    //    显示矩阵数据
+    function shownumber(s){
+        if(isBlank(s)){
+        if(isFFinput(s)){
+        var str="";
+        var A=getnumber(s);
+        var y=A.length;
+        var x=A[0].length;
+        for(var i=0;i<y;i++){
+            for(var j=0;j<x;j++){
+                if(j==x-1){
+                    str=str+A[i][j]+"\n";
+                }
+                else{
+                    str=str+A[i][j]+"  ";
+                }
+            }
+        }
+        alert(str);
+     }
+     else{
+         alert("请从左上第一格开始输入数据！")
+     }
+    }
+    }
+
+    // 是否能够进行矩阵计算
+    function canFigure(){
+        var A=getnumber('a');
+        var B=getnumber('b');
+        if(A[0].length==B.length){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    // 矩阵计算
+    function Figure(){
+        var A=getnumber('a');
+        var B=getnumber('b');
+        var ax=A[0].length;
+        var ay=A.length;
+        var bx=B[0].length;
+        var by=B.length;
+        var result=new Array();
+        for(var i=0;i<ay;i++){
+            result[i]=new Array();
+            for(var j=0;j<bx;j++){
+                result[i][j]=0;
+                for(var m=0;m<ax;m++){
+                    result[i][j]=result[i][j]+A[i][m]*B[m][j];
+                }
+            }
+        }
+        return result;
+    }
+    
+    // 显示结果
+    function showResult(){
+        var A=Figure();
+        var y=A.length;
+        var x=A[0].length;
+        var str="";
+        for(var i=0;i<y;i++){
+            for(var j=0;j<x;j++){
+                if(j==x-1){
+                    str=str+A[i][j]+"\n";
+                }
+                else{
+                    str=str+A[i][j]+"  ";
+                }
+            }
+        }
+        alert(str);
+    }
+
+    // 输出结果
+    function outputresult(){
+        if(isBlank('a')&&isBlank('b')){
+            if(isFFinput('a')&&isFFinput('b')){
+                if( canFigure()){
+        var A=Figure();
+        var x=A[0].length;
+        var y=A.length;
+        for(var i=0;i<y;i++){
+            for(var j=0;j<x;j++){
+                document.getElementById('c'+i+j).value=A[i][j];
+                document.getElementById('c'+i+j).style.backgroundColor="rgb(212, 206, 206)";
+                document.getElementById('c'+i+j).style.fontWeight="bold";
+            }
+        }
+    }else{
+        alert("输入不规范!两个矩阵无法相乘")
+    }
+    }else{
+        alert("输入不规范！请从左上第一个空格输入")
+    }
+    }
+}
+   </script>
+</head>
+<body>
+    <p style="font-family: STSong;color: tomato;font-size: 15px;margin-left: 10px;">由tangfan制作</p>
+    <div style="width: 100%;border: 0px solid black;height: 400px;" >
+    <form>
+    <div class="box1" id="b1">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')" id="a00">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')" id="a01">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')" id="a02">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')" id="a03">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')" id="a04">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')" id="a05">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')" id="a06">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')" id="a07">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')" id="a08">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')" id="a09">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a10">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a11">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a12">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a13">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a14">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a15">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a16">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a17">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a18">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a19">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a20">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a21">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a22">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a23">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a24">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a25">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a26">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a27">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a28">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a29">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a30">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a31">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a32">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a33">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a34">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a35">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a36">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a37">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a38">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a39">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a40">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a41">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a42">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a43">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a44">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a45">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a46">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a47">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a48">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a49">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a50">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a51">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a52">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a53">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a54">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a55">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a56">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a57">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a58">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a59">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a60">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a61">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a62">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a63">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a64">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a65">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a66">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a67">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a68">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a69">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a70">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a71">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a72">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a73">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a74">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a75">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a76">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a77">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a78">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a79">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a80">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a81">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a82">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a83">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a84">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a85">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a86">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a87">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a88">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a89">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a90">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a91">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a92">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a93">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a94">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a95">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a96">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a97">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a98">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="a99">
+
+        
+    </div>
+    <div style="width: 50px;float: left;">
+    <input type="reset" value="清空"style="width: 50px;" class="bu">
+    <input type="button" value="显示"style="width: 50px;" onclick="shownumber('a')"class="bu">
+    </div>
+    </form>
+    <div class="box0">x</div>
+    <form>
+    <div class="box1" id="b2">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')" id="b00">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')" id="b01">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')" id="b02">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')" id="b03">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')" id="b04">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')" id="b05">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')" id="b06">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')" id="b07">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')" id="b08">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')" id="b09">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b10">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b11">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b12">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b13">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b14">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b15">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b16">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b17">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b18">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b19">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b20">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b21">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b22">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b23">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b24">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b25">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b26">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b27">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b28">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b29">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b30">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b31">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b32">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b33">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b34">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b35">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b36">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b37">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b38">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b39">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b40">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b41">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b42">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b43">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b44">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b45">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b46">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b47">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b48">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b49">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b50">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b51">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b52">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b53">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b54">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b55">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b56">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b57">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b58">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b59">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b60">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b61">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b62">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b63">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b64">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b65">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b66">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b67">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b68">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b69">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b70">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b71">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b72">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b73">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b74">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b75">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b76">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b77">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b78">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b79">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b80">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b81">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b82">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b83">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b84">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b85">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b86">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b87">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b88">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b89">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b90">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b91">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b92">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b93">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b94">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b95">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b96">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b97">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b98">
+        <input type="text" class="box2"oninput = "value=value.replace(/[^\d]/g,'')"id="b99">
+       
+    </div>
+    <div style="width: 50px;float: left;">
+        <input type="reset" value="清空"style="width: 50px;"class="bu">
+        <input type="button" value="显示"style="width: 50px;" onclick="shownumber('b')"class="bu">
+        </div>
+    </form>
+    <div class="box0">=</div>
+    <form>
+    <div class="box1" id="b3">
+        <input type="text" class="box2" disabled="disabled" id="c00">
+        <input type="text" class="box2" disabled="disabled" id="c01">
+        <input type="text" class="box2" disabled="disabled" id="c02">
+        <input type="text" class="box2" disabled="disabled" id="c03">
+        <input type="text" class="box2" disabled="disabled" id="c04">
+        <input type="text" class="box2" disabled="disabled" id="c05">
+        <input type="text" class="box2" disabled="disabled" id="c06">
+        <input type="text" class="box2" disabled="disabled" id="c07">
+        <input type="text" class="box2" disabled="disabled" id="c08">
+        <input type="text" class="box2" disabled="disabled" id="c09">
+        <input type="text" class="box2" disabled="disabled" id="c10">
+        <input type="text" class="box2" disabled="disabled" id="c11">
+        <input type="text" class="box2" disabled="disabled" id="c12">
+        <input type="text" class="box2" disabled="disabled" id="c13">
+        <input type="text" class="box2" disabled="disabled" id="c14">
+        <input type="text" class="box2" disabled="disabled" id="c15">
+        <input type="text" class="box2" disabled="disabled" id="c16">
+        <input type="text" class="box2" disabled="disabled" id="c17">
+        <input type="text" class="box2" disabled="disabled" id="c18">
+        <input type="text" class="box2" disabled="disabled" id="c19">
+        <input type="text" class="box2" disabled="disabled" id="c20">
+        <input type="text" class="box2" disabled="disabled" id="c21">
+        <input type="text" class="box2" disabled="disabled" id="c22">
+        <input type="text" class="box2" disabled="disabled" id="c23">
+        <input type="text" class="box2" disabled="disabled" id="c24">
+        <input type="text" class="box2" disabled="disabled" id="c25">
+        <input type="text" class="box2" disabled="disabled" id="c26">
+        <input type="text" class="box2" disabled="disabled" id="c27">
+        <input type="text" class="box2" disabled="disabled" id="c28">
+        <input type="text" class="box2" disabled="disabled" id="c29">
+        <input type="text" class="box2" disabled="disabled" id="c30">
+        <input type="text" class="box2" disabled="disabled" id="c31">
+        <input type="text" class="box2" disabled="disabled" id="c32">
+        <input type="text" class="box2" disabled="disabled" id="c33">
+        <input type="text" class="box2" disabled="disabled" id="c34">
+        <input type="text" class="box2" disabled="disabled" id="c35">
+        <input type="text" class="box2" disabled="disabled" id="c36">
+        <input type="text" class="box2" disabled="disabled" id="c37">
+        <input type="text" class="box2" disabled="disabled" id="c38">
+        <input type="text" class="box2" disabled="disabled" id="c39">
+        <input type="text" class="box2" disabled="disabled" id="c40">
+        <input type="text" class="box2" disabled="disabled" id="c41">
+        <input type="text" class="box2" disabled="disabled" id="c42">
+        <input type="text" class="box2" disabled="disabled" id="c43">
+        <input type="text" class="box2" disabled="disabled" id="c44">
+        <input type="text" class="box2" disabled="disabled" id="c45">
+        <input type="text" class="box2" disabled="disabled" id="c46">
+        <input type="text" class="box2" disabled="disabled" id="c47">
+        <input type="text" class="box2" disabled="disabled" id="c48">
+        <input type="text" class="box2" disabled="disabled" id="c49">
+        <input type="text" class="box2" disabled="disabled" id="c50">
+        <input type="text" class="box2" disabled="disabled" id="c51">
+        <input type="text" class="box2" disabled="disabled" id="c52">
+        <input type="text" class="box2" disabled="disabled" id="c53">
+        <input type="text" class="box2" disabled="disabled" id="c54">
+        <input type="text" class="box2" disabled="disabled" id="c55">
+        <input type="text" class="box2" disabled="disabled" id="c56">
+        <input type="text" class="box2" disabled="disabled" id="c57">
+        <input type="text" class="box2" disabled="disabled" id="c58">
+        <input type="text" class="box2" disabled="disabled" id="c59">
+        <input type="text" class="box2" disabled="disabled" id="c60">
+        <input type="text" class="box2" disabled="disabled" id="c61">
+        <input type="text" class="box2" disabled="disabled" id="c62">
+        <input type="text" class="box2" disabled="disabled" id="c63">
+        <input type="text" class="box2" disabled="disabled" id="c64">
+        <input type="text" class="box2" disabled="disabled" id="c65">
+        <input type="text" class="box2" disabled="disabled" id="c66">
+        <input type="text" class="box2" disabled="disabled" id="c67">
+        <input type="text" class="box2" disabled="disabled" id="c68">
+        <input type="text" class="box2" disabled="disabled" id="c69">
+        <input type="text" class="box2" disabled="disabled" id="c70">
+        <input type="text" class="box2" disabled="disabled" id="c71">
+        <input type="text" class="box2" disabled="disabled" id="c72">
+        <input type="text" class="box2" disabled="disabled" id="c73">
+        <input type="text" class="box2" disabled="disabled" id="c74">
+        <input type="text" class="box2" disabled="disabled" id="c75">
+        <input type="text" class="box2" disabled="disabled" id="c76">
+        <input type="text" class="box2" disabled="disabled" id="c77">
+        <input type="text" class="box2" disabled="disabled" id="c78">
+        <input type="text" class="box2" disabled="disabled" id="c79">
+        <input type="text" class="box2" disabled="disabled" id="c80">
+        <input type="text" class="box2" disabled="disabled" id="c81">
+        <input type="text" class="box2" disabled="disabled" id="c82">
+        <input type="text" class="box2" disabled="disabled" id="c83">
+        <input type="text" class="box2" disabled="disabled" id="c84">
+        <input type="text" class="box2" disabled="disabled" id="c85">
+        <input type="text" class="box2" disabled="disabled" id="c86">
+        <input type="text" class="box2" disabled="disabled" id="c87">
+        <input type="text" class="box2" disabled="disabled" id="c88">
+        <input type="text" class="box2" disabled="disabled" id="c89">
+        <input type="text" class="box2" disabled="disabled" id="c90">
+        <input type="text" class="box2" disabled="disabled" id="c91">
+        <input type="text" class="box2" disabled="disabled" id="c92">
+        <input type="text" class="box2" disabled="disabled" id="c93">
+        <input type="text" class="box2" disabled="disabled" id="c94">
+        <input type="text" class="box2" disabled="disabled" id="c95">
+        <input type="text" class="box2" disabled="disabled" id="c96">
+        <input type="text" class="box2" disabled="disabled" id="c97">
+        <input type="text" class="box2" disabled="disabled" id="c98">
+        <input type="text" class="box2" disabled="disabled" id="c99">
+    </div>
+    <div style="width: 50px;float: left;">
+        <input type="reset" value="清空"style="width: 50px;"class="bu">
+        <input type="button" value="显示"style="width: 50px;"class="bu"onclick="showResult()">
+        <input type="button" value="计算"style="width: 50px;"class="bu"onclick="outputresult()">
+        </div>
+    </form>
+</div>
+<h1>使用须知</h1>
+<p>1.请从左上第一个空格输入矩阵数据</p>
+<p>2.只能输入数字</p>
+<p>3.只用于一般做作业，因此矩阵最大十阶</p>
+    
+    
+
+</body>
